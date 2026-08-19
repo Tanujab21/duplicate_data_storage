@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Cloud Data Deduplication System</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #222;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .success {
+            background: #d4edda;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .error {
+            background: #f8d7da;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background: #eee;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Cloud Data Deduplication System</h1>
+
+    <p>
+        Add a new record. The system validates the information
+        and prevents duplicate records from being stored.
+    </p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="{{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+    <form action="/add" method="POST">
+
+        <label>Name</label>
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Enter name"
+            required
+        >
+
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            required
+        >
+
+
+        <label>Phone</label>
+
+        <input
+            type="text"
+            name="phone"
+            placeholder="Enter phone number"
+            required
+        >
+
+
+        <button type="submit">
+            Validate & Store
+        </button>
+
+    </form>
+
+
+    <br>
+
+    <a href="/records">
+        View Stored Unique Records
+    </a>
+
+
+    {% if records %}
+
+        <h2>Verified Records</h2>
+
+        <table>
+
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Record ID</th>
+            </tr>
+
+            {% for record in records %}
+
+            <tr>
+
+                <td>
+                    {{ record.name }}
+                </td>
+
+                <td>
+                    {{ record.email }}
+                </td>
+
+                <td>
+                    {{ record.phone }}
+                </td>
+
+                <td>
+                    {{ record.record_id }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
